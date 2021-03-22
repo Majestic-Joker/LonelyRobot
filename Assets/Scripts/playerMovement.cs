@@ -82,7 +82,18 @@ public class playerMovement : MonoBehaviour
         }
 
         if (jumping)
+        {
+            Movement();
             jumping = false;
+        }
+        else if (controller.isGrounded)
+            moveDirection.y = 0f;
+        else
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+            controller.Move(moveDirection);
+        }
+
         if (sprinting)
         {
             speed = sprintSpeed;
