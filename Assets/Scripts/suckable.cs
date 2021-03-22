@@ -15,6 +15,8 @@ public class suckable : MonoBehaviour
     private float damageThreshold = 25;
     [SerializeField]
     private float suckSpeed = 1.0f;
+    [SerializeField]
+    private GameObject gameManager;
 
 
     private void Awake()
@@ -22,13 +24,9 @@ public class suckable : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         deathSound = GetComponent<AudioSource>();
+        gameManager = GameObject.FindWithTag("GameController");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void FixedUpdate()
     {
@@ -66,6 +64,7 @@ public class suckable : MonoBehaviour
         }   
         else
         {
+            gameManager.GetComponent<GameManager>().AddScore();
             col.enabled = false;
             Destroy(gameObject);
         }

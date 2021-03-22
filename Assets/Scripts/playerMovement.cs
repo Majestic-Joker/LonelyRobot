@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
     //Initialize variables, unseen ones first, then serialized private, then public
+    private GameObject gameManager;
     private CharacterController controller;
     private GameObject Vacuum;
     private ParticleSystem vParticles;
@@ -32,11 +33,13 @@ public class playerMovement : MonoBehaviour
     private float gravity = 2.0f;
     [SerializeField]
     private float turnSpeed = 2.0f;
+    
 
     
     //Runs every time the object is spawned
     private void Awake()
     {
+        gameManager = GameObject.FindWithTag("GameController");
         controller = GetComponent<CharacterController>();
         playerCollider = GetComponent<Collider>();
         sprintReset = speed;
@@ -109,7 +112,10 @@ public class playerMovement : MonoBehaviour
         else
             StopSuck();
 
-
+        if(transform.position.y < -5)
+        {
+            gameManager.GetComponent<GameManager>().GameOver(false);
+        }
     }
 
     private void Movement()
